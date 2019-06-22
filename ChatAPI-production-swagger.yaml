@@ -1,0 +1,135 @@
+---
+swagger: "2.0"
+info:
+  version: "2019-06-13T15:46:41Z"
+  title: "ChatAPI"
+host: "b2rhlba53e.execute-api.us-east-2.amazonaws.com"
+basePath: "/production"
+schemes:
+- "https"
+paths:
+  /conversations:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ConversationList"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+  /conversations/{id}:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Conversation"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+    post:
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "NewMessage"
+        required: true
+        schema:
+          $ref: "#/definitions/NewMessage"
+      responses:
+        204:
+          description: "204 response"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"
+  NewMessage:
+    type: "string"
+  Conversation:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      participants:
+        type: "array"
+        items:
+          type: "string"
+      last:
+        type: "number"
+        format: "utc-millisec"
+      messages:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            sender:
+              type: "string"
+            time:
+              type: "number"
+              format: "utc-millisec"
+            message:
+              type: "string"
+  ConversationList:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        participants:
+          type: "array"
+          items:
+            type: "string"
+        last:
+          type: "number"
+          format: "utc-millisec"
